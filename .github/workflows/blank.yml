@@ -4,7 +4,7 @@ name: deploy.yml
 on: push
 
 jobs:
-  build-1:
+  build-1:  
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -62,7 +62,26 @@ jobs:
         run: echo "unit-test group ${{ matrix.test-group }}"
 
 
+  deploy:
+    needs:
+      - integration-1
+      - integration-2
+      - lint
+      - unit-test
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy
+        run: echo "deploy"
+
   weeeeekend:
+    needs:
+      - integration-1
+      - integration-2
+      - lint
+      - unit-test
+        
     runs-on: ubuntu-latest
 
     steps:
@@ -76,18 +95,3 @@ jobs:
 
       - name: Run KFC automation script
         run: python .github/scripts/kfc.py
-
-
-  deploy:
-    needs:
-      - integration-1
-      - integration-2
-      - lint
-      - unit-test
-      - weeeeekend
-
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Deploy
-        run: echo "deploy"
