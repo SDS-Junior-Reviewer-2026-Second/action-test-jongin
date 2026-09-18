@@ -40,7 +40,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@6.1.0
+        uses: actions/checkout@v6.1.0
 
       - name: Setup python
         uses: actions/setup-python@v7.0.0
